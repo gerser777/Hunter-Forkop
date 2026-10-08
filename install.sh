@@ -1,12 +1,12 @@
 #!/bin/sh
-# Hunter Forkop 0.1.0-rc1; SPDX-License-Identifier: GPL-2.0-or-later
+# Hunter Forkop 0.1.0-rc2; SPDX-License-Identifier: GPL-2.0-or-later
 # Installer overlay for upstream Forkop, not a replacement firmware.
 set -eu
 umask 077
-TAG=hunter-forkop-24-v0.1.0-rc1
+TAG=hunter-forkop-24-v0.1.0-rc2
 BASE=https://raw.githubusercontent.com/gerser777/Hunter-Forkop/$TAG
 ENGINE=1.14.1-extended-2.7.2
-PARSER_SHA=6bb619ae1d43628b0e25d0037fdc4513be789fd5e9d4a7196976431285942825
+PARSER_SHA=6c6bd5b22608c7b604077681f9b038b5a34746f52408282e92208c9f9d1a6b71
 WORK= BACKUP= WATCHDOG= MUTATED=0
 fail() { echo "ERROR: $*" >&2; exit 1; }
 sha() { sha256sum "$1" | awk '{print $1}'; }

@@ -1,6 +1,6 @@
 # Hunter Forkop для OpenWrt 24.10 / ARM64
 
-Версия **0.1.0-rc1**, предварительный установщик поверх Forkop 1.0.5. Это не прошивка роутера и не заново скомпилированный Forkop. Используются официальные IPK Forkop/LuCI и закреплённая сборка sing-box-extended; добавляется наш открытый патч импорта XHTTP.
+Версия **0.1.0-rc2**, предварительный установщик поверх Forkop 1.0.5. Это не прошивка роутера и не заново скомпилированный Forkop. Используются официальные IPK Forkop/LuCI и закреплённая сборка sing-box-extended; добавляется наш открытый патч импорта XHTTP.
 
 ## Установка
 
@@ -9,7 +9,7 @@
 В SSH от root:
 
 ```sh
-wget -O /tmp/hunter-forkop.sh https://raw.githubusercontent.com/gerser777/Hunter-Forkop/hunter-forkop-24-v0.1.0-rc1/install.sh && sh /tmp/hunter-forkop.sh
+wget -O /tmp/hunter-forkop.sh https://raw.githubusercontent.com/gerser777/Hunter-Forkop/hunter-forkop-24-v0.1.0-rc2/install.sh && sh /tmp/hunter-forkop.sh
 ```
 
 Только проверка без изменений:
@@ -57,3 +57,5 @@ sh /root/hunter-backups/installer-<UTC>-<PID>/rollback.sh
 - Forkop 1.0.5: https://github.com/ushan0v/forkop/releases/tag/1.0.5 — GPL-2.0-or-later; полный исходный код тега доступен у автора. Лицензия рядом в LICENSE.Forkop.
 - sing-box-extended v1.14.1-extended-2.7.2: https://github.com/shtorm-7/sing-box-extended/releases/tag/v1.14.1-extended-2.7.2 — скачивается напрямую у автора, бинарник в нашем репозитории не хранится.
 - Наши изменения parser.uc опубликованы полностью; минимальный diff — `forkop-xhttp-preserve.patch`. Установщик GPL-2.0-or-later.
+
+В rc2 исправлена контрольная сумма парсера после нормализации LF в Git. rc1 безопасно прекращает установку на проверке этой суммы.
