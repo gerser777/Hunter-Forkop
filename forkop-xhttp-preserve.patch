@@ -1,0 +1,73 @@
+--- a/usr/lib/forkop/subscription/parser.uc
++++ b/usr/lib/forkop/subscription/parser.uc
+@@ -115,6 +115,22 @@
+         return;
+ 
+     for (let key in [
++        "uplinkHTTPMethod",
++        "uplink_http_method",
++        "uplinkDataPlacement",
++        "uplink_data_placement",
++        "uplinkDataKey",
++        "uplink_data_key",
++        "xPaddingObfsMode",
++        "x_padding_obfs_mode",
++        "xPaddingHeader",
++        "x_padding_header",
++        "xPaddingKey",
++        "x_padding_key",
++        "xPaddingPlacement",
++        "x_padding_placement",
++        "xPaddingMethod",
++        "x_padding_method",
+         "xPaddingBytes",
+         "x_padding_bytes",
+         "noGRPCHeader",
+@@ -609,6 +625,31 @@
+     }
+ 
+     return [tls, true];
++}
++
++function hunter_xhttp_preserve_settings(result, source, extra) {
++    let uplink_http_method = xhttp_setting_value(source, extra, "uplinkHTTPMethod", "uplink_http_method");
++    if (xhttp_value_present(uplink_http_method))
++        result.uplink_http_method = as_string(uplink_http_method);
++    let uplink_data_placement = xhttp_setting_value(source, extra, "uplinkDataPlacement", "uplink_data_placement");
++    if (xhttp_value_present(uplink_data_placement))
++        result.uplink_data_placement = as_string(uplink_data_placement);
++    let uplink_data_key = xhttp_setting_value(source, extra, "uplinkDataKey", "uplink_data_key");
++    if (xhttp_value_present(uplink_data_key))
++        result.uplink_data_key = as_string(uplink_data_key);
++    xhttp_optional_bool(result, "x_padding_obfs_mode", xhttp_setting_value(source, extra, "xPaddingObfsMode", "x_padding_obfs_mode"));
++    let x_padding_header = xhttp_setting_value(source, extra, "xPaddingHeader", "x_padding_header");
++    if (xhttp_value_present(x_padding_header))
++        result.x_padding_header = as_string(x_padding_header);
++    let x_padding_key = xhttp_setting_value(source, extra, "xPaddingKey", "x_padding_key");
++    if (xhttp_value_present(x_padding_key))
++        result.x_padding_key = as_string(x_padding_key);
++    let x_padding_placement = xhttp_setting_value(source, extra, "xPaddingPlacement", "x_padding_placement");
++    if (xhttp_value_present(x_padding_placement))
++        result.x_padding_placement = as_string(x_padding_placement);
++    let x_padding_method = xhttp_setting_value(source, extra, "xPaddingMethod", "x_padding_method");
++    if (xhttp_value_present(x_padding_method))
++        result.x_padding_method = as_string(x_padding_method);
+ }
+ 
+ function add_transport(url) {
+@@ -675,6 +716,7 @@
+             result.host = host;
+ 
+         let extra_settings = xhttp_extra_settings(query);
++        hunter_xhttp_preserve_settings(result, query, extra_settings);
+         xhttp_optional_positive_range(result, "x_padding_bytes", xhttp_setting_value(query, extra_settings, "xPaddingBytes", "x_padding_bytes"));
+         xhttp_optional_bool(result, "no_grpc_header", xhttp_setting_value(query, extra_settings, "noGRPCHeader", "no_grpc_header"));
+         xhttp_optional_positive_range(result, "sc_max_each_post_bytes", xhttp_setting_value(query, extra_settings, "scMaxEachPostBytes", "sc_max_each_post_bytes"));
+@@ -2164,6 +2206,7 @@
+             result.mode = "auto";
+         if (as_string(settings.host || "") != "")
+             result.host = as_string(settings.host);
++        hunter_xhttp_preserve_settings(result, settings, xhttp_extra_settings(settings));
+         xhttp_optional_positive_range(result, "x_padding_bytes", xhttp_setting_value(settings, settings, "xPaddingBytes", "x_padding_bytes"));
+         xhttp_optional_bool(result, "no_grpc_header", xhttp_setting_value(settings, settings, "noGRPCHeader", "no_grpc_header"));
+         xhttp_optional_positive_range(result, "sc_max_each_post_bytes", xhttp_setting_value(settings, settings, "scMaxEachPostBytes", "sc_max_each_post_bytes"));
